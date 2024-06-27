@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Gym Tracker
 
-## Getting Started
+**Gym Tracker** is a website to track your daily weight training workouts. Using gym_tracker, you have the ability to store the weight, difficulty, and repetitions for each set done in your workouts. All this data is stored so you can access the information through charts on a dashboard or a spreadsheet (this data can be exported to xlsx). Additionally, you can track your progress with a photo album, with pictures taken weekly or daily.
 
-First, run the development server:
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Available Scripts](#available-scripts)
+- [Technologies](#technologies)
+- [Contribution](#contribution)
+
+## Installation
+
+To start using the project, follow the steps below:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/otavioxavier/Gym_Tracker.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd gym_tracker
+   ```
+
+3. Install the dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+## Usage
+
+To run the application locally, use the command:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Available Scripts
 
-## Learn More
+In the project directory, you can run:
 
-To learn more about Next.js, take a look at the following resources:
+### `npm run dev` or `yarn dev`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Runs the app in development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### `npm run build` or `yarn build`
 
-## Deploy on Vercel
+Builds the app for production to the `build` folder.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### `npm start` or `yarn start`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Runs the app in production mode. Make sure to run `npm run build` first.
+
+## Technologies
+
+- [Next.js](https://nextjs.org/) - The framework used
+- [React](https://reactjs.org/) - Library for building the user interface
+- [Node.js](https://nodejs.org/) - JavaScript runtime environment
+- [PrismaORM](https://prisma.io/) - Node.js and TypeScript ORM
+- [axios](https://axios-http.com/) - Promise based HTTP client for the browser and node.js
+- [tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework packed with classes
+- [zod](https://zod.dev/) - TypeScript-first schema validation with static type inference
+- [clerk](https://clerk.com/) - User Management Platform
+
+## Contribution
+
+Contributions are welcome! Feel free to open an [issue](https://github.com/user/gym_tracker/issues) or submit a pull request.
