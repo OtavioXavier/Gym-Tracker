@@ -37,7 +37,9 @@ export default function ExerciseCard({
           </div>
         </CardContent>
         <CardFooter className="flex-col items-start">
-          <CardDescription className='line-clamp-3 min-h-20 max-h-20 mb-2'>{description}</CardDescription>
+          <CardDescription className='line-clamp-3 min-h-20 max-h-20 max-w-56 mb-2'>
+            {description}
+            </CardDescription>
           <span className="text-red-500 font-semibold">{muscle}</span>
         </CardFooter>
       </Card>
