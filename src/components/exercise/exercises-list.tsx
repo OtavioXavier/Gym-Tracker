@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import ExerciseCard from "@/components/exercise/exercise-card";
 import {
   Carousel,
@@ -8,16 +8,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Exercise } from "@prisma/client";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 
 interface ExerciseListProps {
   exercises: Exercise[] | null;
 }
 
 export default function ExerciseList({ exercises }: ExerciseListProps) {
-  const searchParams = useSearchParams()
- 
-  const search = searchParams.get('search')
+  const searchParams = useSearchParams();
+
+  const search = searchParams.get("search");
   return (
     <section className="mb-8">
       <h3 className="text-lg font-semibold mb-8">Exercises List</h3>
@@ -29,9 +29,11 @@ export default function ExerciseList({ exercises }: ExerciseListProps) {
       >
         <CarouselContent className="-ml-1">
           {exercises && exercises.length > 0 ? (
-            exercises.map((exercise) => { 
-              if(search !== null) {
-                if(exercise.name.toLowerCase().includes(search.toLowerCase())) {
+            exercises.map((exercise) => {
+              if (search !== null) {
+                if (
+                  exercise.name.toLowerCase().includes(search.toLowerCase())
+                ) {
                   return (
                     <CarouselItem
                       key={exercise.id}
@@ -45,9 +47,8 @@ export default function ExerciseList({ exercises }: ExerciseListProps) {
                         imageUrl={exercise.thumbUrl}
                       />
                     </CarouselItem>
-                  )
+                  );
                 }
-
               } else {
                 return (
                   <CarouselItem
@@ -62,9 +63,9 @@ export default function ExerciseList({ exercises }: ExerciseListProps) {
                       imageUrl={exercise.thumbUrl}
                     />
                   </CarouselItem>
-                )
+                );
               }
-})
+            })
           ) : (
             <p className="text-slate-500 text-sm">
               There are not exercises on registers =(
