@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
-import { Exercise, Set } from "@prisma/client";
+import { Exercise } from "@prisma/client";
 import {
   Form,
   FormControl,
@@ -58,12 +58,9 @@ const muscles = [
 ] as const;
 
 interface AddExerciseFormProps {
-  exercise: ExerciseWithSets | null;
+  exercise: Exercise | null;
 }
 
-export type ExerciseWithSets = Exercise & {
-  sets: Set[] | null;
-};
 
 export default function AddExerciseForm({ exercise }: AddExerciseFormProps) {
   const [image, setImage] = useState<string | undefined>(exercise?.thumbUrl);
@@ -105,8 +102,11 @@ export default function AddExerciseForm({ exercise }: AddExerciseFormProps) {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
       thumbUrl: image,
-      planId: "awefa124i2b34eb23",
+      planId: "3f16446c-490a-4e06-a0f6-9213a07cd630",
       muscle: muscleSelected,
+      weight: [0, 0, 0],
+      repetitions: [0, 0, 0],
+      restTime: [0, 0, 0],
     };
     try {
       if (exercise) {
