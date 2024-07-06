@@ -38,8 +38,8 @@ model WorkoutPlan {
   name      String
   sheet     Exercise[]
   users     User[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now())
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @default(now()) @map("updated_at")
 
   @@map("workout_plan")
 }
@@ -55,20 +55,22 @@ model Exercise {
   weight       Int[]    
   repetitions  Int[]   
   restTime     Int[] 
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @default(now())
+  historys    ExerciseHistory[]
+
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @default(now()) @map("updated_at")
 }
 
 model ExerciseHistory {
   id          String        @id @default(uuid())
-  name        String
-  muscle      Muscles
+  exercise    Exercise      @relation(fields: [exerciseId], references: [id])
+  exerciseId  String
   planId      String
   weight       Int[]    
   repetitions  Int[]   
   restTime     Int[]
 
-  updatedAt   DateTime      @default(now())
+  createdAt   DateTime      @default(now()) @map("created_at")
 }
 
 model Photo {
@@ -76,6 +78,6 @@ model Photo {
   urlImage  String   @map("url_image")
   owner     User     @relation(fields: [ownerId], references: [id])
   ownerId   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())  @map("created_at")
+  updatedAt DateTime @default(now())   @map("updated_at")
 }
