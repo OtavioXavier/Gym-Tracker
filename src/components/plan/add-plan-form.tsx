@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { Exercise, Log, User, WorkoutPlan } from "@prisma/client";
+import { Exercise, User, WorkoutPlan } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -23,7 +23,6 @@ interface AddPlansFormProps {
 export type PlanWithExercises = WorkoutPlan & {
   sheet: Exercise[];
   users: User[];
-  logs: Log[];
 };
 
 const MuscleEnum = z.enum([
