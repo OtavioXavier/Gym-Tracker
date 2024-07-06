@@ -8,7 +8,6 @@ export const getPlanById = async (planId: string) => {
       },
       include: {
         sheet: true,
-        logs: true,
         users: true,
       },
     });
