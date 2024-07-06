@@ -7,12 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Dificult {
-  EASY
-  MEDIUM
-  HARD
-}
-
 enum Muscles {
   CHEST
   BACK
@@ -33,19 +27,17 @@ model User {
   plan      WorkoutPlan @relation(fields: [planId], references: [id])
   planId    String
   album     Photo[]
-  logs      Log[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @default(now())
 
   @@map("users")
 }
-
+// Quando um usuario muda um plano em conjunto cria-se um plano novo
 model WorkoutPlan {
   id        String     @id @default(uuid())
   name      String
   sheet     Exercise[]
   users     User[]
-  logs      Log[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
 
@@ -58,29 +50,25 @@ model Exercise {
   description String
   thumbUrl    String        @map("thumb_url")
   muscle      Muscles
-  sets        Set[]
   plan        WorkoutPlan   @relation(fields: [planId], references: [id])
   planId      String
-  logs        LogExercise[]
+  weight       Int[]    
+  repetitions  Int[]   
+  restTime     Int[] 
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now())
 }
 
-model Set {
-  id           String   @id @default(uuid())
-  weight       Int      @default(0)
-  repetitions  Int      @default(0)
-  logs         LogSet[]
-  dificult     Dificult
-  order        Int
-  restPause    Int
-  observations String
-  exercise     Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId   String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now())
+model ExerciseHistory {
+  id          String        @id @default(uuid())
+  name        String
+  muscle      Muscles
+  planId      String
+  weight       Int[]    
+  repetitions  Int[]   
+  restTime     Int[]
 
-  @@map("workout_set")
+  updatedAt   DateTime      @default(now())
 }
 
 model Photo {
@@ -90,51 +78,4 @@ model Photo {
   ownerId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-}
-
-model Log {
-  id        String        @id @default(uuid())
-  plan      WorkoutPlan   @relation(fields: [planId], references: [id])
-  planId    String
-  exercises LogExercise[]
-  sets      LogSet[]
-  owner     User          @relation(fields: [ownerId], references: [id])
-  ownerId   String
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @default(now())
-
-  @@map("workout_log")
-}
-
-model LogExercise {
-  id         String   @id @default(uuid())
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId String
-  log        Log      @relation(fields: [logId], references: [id])
-  logId      String
-  sets       LogSet[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
-
-  @@map("log_exercise")
-}
-
-model LogSet {
-  id            String      @id @default(uuid())
-  set           Set         @relation(fields: [setId], references: [id])
-  setId         String
-  logExercise   LogExercise @relation(fields: [logExerciseId], references: [id])
-  logExerciseId String
-  log           Log         @relation(fields: [logId], references: [id])
-  logId         String
-  weight        Int
-  repetitions   Int
-  dificult      Dificult
-  restPause     Int
-  order         Int
-  observations  String
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @default(now())
-
-  @@map("log_set")
 }
