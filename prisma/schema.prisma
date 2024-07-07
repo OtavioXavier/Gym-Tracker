@@ -18,6 +18,7 @@ enum Muscles {
   CARDIO
 }
 
+
 model User {
   id        String      @id @default(uuid())
   nickName  String
@@ -37,6 +38,7 @@ model WorkoutPlan {
   id        String     @id @default(uuid())
   name      String
   sheet     Exercise[]
+  history   ExerciseHistory[]
   users     User[]
   createdAt DateTime   @default(now()) @map("created_at")
   updatedAt DateTime   @default(now()) @map("updated_at")
@@ -55,6 +57,7 @@ model Exercise {
   weight       Int[]    
   repetitions  Int[]   
   restTime     Int[] 
+  trainDay     Int[]
   historys    ExerciseHistory[]
 
   createdAt   DateTime      @default(now()) @map("created_at")
@@ -65,6 +68,7 @@ model ExerciseHistory {
   id          String        @id @default(uuid())
   exercise    Exercise      @relation(fields: [exerciseId], references: [id])
   exerciseId  String
+  plan        WorkoutPlan   @relation(fields: [planId], references: [id])
   planId      String
   weight       Int[]    
   repetitions  Int[]   
