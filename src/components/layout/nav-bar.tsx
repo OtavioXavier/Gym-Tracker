@@ -20,7 +20,6 @@ const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Workout", href: "/workout", icon: Dumbbell },
   { name: "Plans", href: "/plans", icon: NotebookPen },
-  { name: "Exercises", href: "/exercises", icon: BicepsFlexed },
 ];
 
 export default function NavBar({
