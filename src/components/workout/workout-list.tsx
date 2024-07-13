@@ -1,7 +1,3 @@
-"use client";
-
-import ExerciseCard from "@/components/exercise/exercise-card";
-
 import {
   Carousel,
   CarouselContent,
@@ -9,13 +5,17 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Exercise } from "@prisma/client";
+import WorkoutCard from "./workout-card";
+import { Exercise } from '@prisma/client';
 
 interface ExerciseListProps {
-  exercises: Exercise[] | null;
+  exercises: Exercise[];
 }
 
 export default function WorkoutList({ exercises }: ExerciseListProps) {
+  const today = new Date().getDay();
+
+
   return (
     <section className="mb-8">
       <h3 className="text-lg font-semibold mb-8">Exercises Sequence</h3>
@@ -26,22 +26,30 @@ export default function WorkoutList({ exercises }: ExerciseListProps) {
         className="w-full max-w-screen-md mx-8 md:mx-10"
       >
         <CarouselContent className="ml-2">
-          {exercises && exercises.length > 0 ? (
+          {(exercises && exercises.length > 0) ? (
             exercises.map((exercise) => {
-              return (
-                <CarouselItem
-                  key={exercise.id}
-                  className="pl-1 md:basis-1/2 lg:basis-1/3 transition-all mx-1"
-                >
-                  <ExerciseCard
-                    name={exercise.name}
-                    description={exercise.description}
-                    muscle={exercise.muscle}
-                    id={exercise.id}
-                    imageUrl={exercise.thumbUrl}
-                  />
-                </CarouselItem>
-              );
+              const {trainDay, id, name, muscle, thumbUrl, weight, repetitions, restTime } = exercise;
+              if (trainDay && trainDay.includes(today)) {
+                return (
+                  <CarouselItem
+                    key={id}
+                    className="pl-1 md:basis-1/2 lg:basis-1/3 transition-all mx-1"
+                  >
+                    <WorkoutCard
+                      name={name}
+                      muscle={muscle}
+                      id={id}
+                      thumbUrl={thumbUrl}
+                      weight={weight}
+                      repetitions={repetitions}
+                      restTime={restTime}
+                      trainDay={trainDay}
+                    />
+
+                  </CarouselItem>
+                );
+              }
+              return "Item";
             })
           ) : (
             <p className="text-slate-500 text-sm">
