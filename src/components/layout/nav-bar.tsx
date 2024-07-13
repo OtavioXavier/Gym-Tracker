@@ -19,7 +19,6 @@ import { clsx } from "clsx";
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Workout", href: "/workout", icon: Dumbbell },
-  { name: "Plans", href: "/plans", icon: NotebookPen },
 ];
 
 export default function NavBar({
