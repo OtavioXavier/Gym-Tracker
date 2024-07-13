@@ -7,6 +7,70 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  password   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
+  nickname   String
+  planId     String      @map("plan_id")
+  profileUrl String      @map("profile_url")
+  album      Photo[]
+  plan       WorkoutPlan @relation(fields: [planId], references: [id])
+
+  @@map("users")
+}
+
+model WorkoutPlan {
+  id        String            @id @default(uuid())
+  name      String
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @default(now()) @map("updated_at")
+  sheet     Exercise[]
+  history   ExerciseHistory[]
+  users     User[]
+
+  @@map("workout_plan")
+}
+
+model Exercise {
+  id          String            @id @default(uuid())
+  name        String
+  thumbUrl    String            @map("thumb_url")
+  muscle      Muscles
+  weight      Int[]
+  repetitions Int[]
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @default(now()) @map("updated_at")
+  planId      String            @map("plan_id")
+  restTime    Int[]             @map("rest_time")
+  trainDay    Int[]             @map("train_day")
+  plan        WorkoutPlan       @relation(fields: [planId], references: [id])
+  historys    ExerciseHistory[]
+}
+
+model ExerciseHistory {
+  id          String      @id @default(uuid())
+  weight      Int[]
+  repetitions Int[]
+  createdAt   DateTime    @default(now()) @map("created_at")
+  exerciseId  String      @map("exercise_id")
+  planId      String      @map("plan_id")
+  restTime    Int[]       @map("rest_time")
+  exercise    Exercise    @relation(fields: [exerciseId], references: [id])
+  plan        WorkoutPlan @relation(fields: [planId], references: [id])
+}
+
+model Photo {
+  id        String   @id @default(uuid())
+  urlImage  String   @map("url_image")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  ownerId   String   @map("owner_id")
+  owner     User     @relation(fields: [ownerId], references: [id])
+}
+
 enum Muscles {
   CHEST
   BACK
@@ -16,72 +80,4 @@ enum Muscles {
   ARMS
   CORE
   CARDIO
-}
-
-
-model User {
-  id        String      @id @default(uuid())
-  nickName  String
-  email     String      @unique
-  password  String
-  avatarUrl String
-  plan      WorkoutPlan @relation(fields: [planId], references: [id])
-  planId    String
-  album     Photo[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @default(now())
-
-  @@map("users")
-}
-// Quando um usuario muda um plano em conjunto cria-se um plano novo
-model WorkoutPlan {
-  id        String     @id @default(uuid())
-  name      String
-  sheet     Exercise[]
-  history   ExerciseHistory[]
-  users     User[]
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @default(now()) @map("updated_at")
-
-  @@map("workout_plan")
-}
-
-model Exercise {
-  id          String        @id @default(uuid())
-  name        String
-  description String
-  thumbUrl    String        @map("thumb_url")
-  muscle      Muscles
-  plan        WorkoutPlan   @relation(fields: [planId], references: [id])
-  planId      String
-  weight       Int[]    
-  repetitions  Int[]   
-  restTime     Int[] 
-  trainDay     Int[]
-  historys    ExerciseHistory[]
-
-  createdAt   DateTime      @default(now()) @map("created_at")
-  updatedAt   DateTime      @default(now()) @map("updated_at")
-}
-
-model ExerciseHistory {
-  id          String        @id @default(uuid())
-  exercise    Exercise      @relation(fields: [exerciseId], references: [id])
-  exerciseId  String
-  plan        WorkoutPlan   @relation(fields: [planId], references: [id])
-  planId      String
-  weight       Int[]    
-  repetitions  Int[]   
-  restTime     Int[]
-
-  createdAt   DateTime      @default(now()) @map("created_at")
-}
-
-model Photo {
-  id        String   @id @default(uuid())
-  urlImage  String   @map("url_image")
-  owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   String
-  createdAt DateTime @default(now())  @map("created_at")
-  updatedAt DateTime @default(now())   @map("updated_at")
 }
