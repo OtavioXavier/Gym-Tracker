@@ -1,5 +1,3 @@
-
-Copy code
 import { auth } from "@clerk/nextjs/server";
 import prismadb from "@/lib/prismadb";
 import { schema } from "@/lib/schema";
