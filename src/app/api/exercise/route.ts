@@ -5,7 +5,6 @@ import { schema } from "@/lib/schema";
 
 export async function POST(req: Request) {
   try {
-    // { name, description, thumbUrl, planId, muscle }
 
     const data = schema.parse(await req.json());
 
@@ -22,6 +21,24 @@ export async function POST(req: Request) {
     return Response.json({ status: 201, data: exercise });
   } catch (error: any) {
     console.error("Error at /api/exercise POST", error);
+    return Response.json({ status: 500, message: "Internal Server Error" });
+  }
+}
+
+export async function GET() {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return Response.json({ status: 401, message: "Unauthorized" });
+    }
+
+    const data = await prismadb.exercise.findMany();
+
+    return Response.json({ data, status: 200, message: "Exercises fetched" });
+
+  } catch (error: any) {
+    console.error("Error at /api/exercise GET", error);
     return Response.json({ status: 500, message: "Internal Server Error" });
   }
 }
